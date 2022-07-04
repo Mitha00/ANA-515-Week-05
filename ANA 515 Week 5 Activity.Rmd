@@ -1,0 +1,66 @@
+---
+title: "Data Visualization Activity"
+author: "Rashmitha Pasupureddy"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme:
+      bootswatch: darkly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries, include=FALSE, echo=FALSE}
+
+    library(tidyverse)  
+    library(dplyr)  
+    library(knitr)  
+    library(bslib)  
+    library(ggplot2)
+    library(forcats)
+
+```
+
+```{r lotrdata, echo=FALSE}
+
+LotrPlot <- read.csv("C:/Users/rashm/Desktop/ANA 515 Fundamentals of Data Storage/LOTR/lotr_scripts.csv")
+
+```
+
+```{r Frodo, echo=FALSE}
+
+Frodo <- filter(LotrPlot, character=="FRODO")
+
+```
+
+# Dialogue Count for Frodo 
+
+```{r dialogue, echo=FALSE}
+
+Frodo %>%
+    ggplot(aes(fct_infreq(movie) %>% fct_rev())) + 
+    geom_bar() + coord_flip() + 
+    labs(x = "Movie") 
+
+```
+
+```{r Return of the King, echo=FALSE}
+
+ROK <- filter(LotrPlot, movie=="The Return of the King ")
+
+```
+
+# Lines of Dialogue per character in Return of the King
+
+```{r ROK, echo=FALSE}
+
+  ggplot(ROK, aes(x = fct_lump(character, n=6))) + 
+  geom_bar() + 
+  coord_flip() +
+  labs(x = "Name of the character", y = "Dialogue Count")
+  
+```
+
+
